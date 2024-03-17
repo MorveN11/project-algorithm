@@ -7,7 +7,7 @@ P
 Judy X 10
 Cube Judy 12
 Kitt X 7
-XM2
+X M 2
 P Kitt 20
 Cube P 5
 Judy Kitt 13
