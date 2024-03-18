@@ -39,6 +39,27 @@ public class Audie {
     return this.graph;
   }
 
+  private void removeEdgesLessThan(int x) {
+    this.graph.getAllEdges().forEach(edge -> {
+      if (edge.getWeight() <= x) {
+        this.graph.removeEdge(edge.getWeight(),
+                              edge.getSource(),
+                              edge.getDestination());
+      }
+    });
+  }
+
+  private void removeEmptyNodes() {
+    this.graph.getAllNodes().removeIf(node -> this.graph.getEdgesNode(node).isEmpty());
+    this.graph = new MaxGraph<>(this.graph).getGraph();
+  }
+
+  private Set<Node<String>> getGreaterThanAlgorithm(int x) {
+    removeEdgesLessThan(x);
+    removeEmptyNodes();
+    return this.graph.getAllNodes();
+  }
+
   /**
    * This method gives the nodes of the graph that has a relation greater than x.
    *
@@ -46,8 +67,6 @@ public class Audie {
    * @return The nodes of the graph.
    */
   public String getGreaterThan(int x) {
-    removeEdgesLessThan(x);
-    removeEmptyNodes();
     Set<Node<String>> nodes = getGreaterThanAlgorithm(x);
     StringBuilder result = new StringBuilder();
     result.append("Guests:\n");
@@ -57,10 +76,59 @@ public class Audie {
     return result.toString();
   }
 
-  private Set<Node<String>> getGreaterThanAlgorithm(int x) {
-    removeEdgesLessThan(x);
-    removeEmptyNodes();
-    return this.graph.getAllNodes();
+  private Map<Node<String>, List<Node<String>>> groupsByNode() {
+    Map<Node<String>, List<Node<String>>> groups = new HashMap<>();
+    this.graph.getAllNodes().forEach(node -> {
+      List<Node<String>> group = new LinkedList<>();
+      group.add(node);
+      groups.put(node,
+                 group);
+    });
+    return groups;
+  }
+
+  private Map<Node<String>, Node<String>> getNodes() {
+    Map<Node<String>, Node<String>> nodes = new HashMap<>();
+    this.graph.getAllNodes().forEach(node -> nodes.put(node,
+                                                       node));
+    return nodes;
+  }
+
+  private Map<Node<String>, List<Node<String>>> getGroupsOfAlgorithm(int k) {
+    Map<Node<String>, List<Node<String>>> groups = groupsByNode();
+    if (groups.size() == k) {
+      return groups;
+    }
+    Map<Node<String>, Node<String>> nodes = getNodes();
+    Set<Edge<String>> visitedEdges = new HashSet<>();
+    boolean firstRelation = true;
+    for (Edge<String> edge : this.graph.getAllEdges()) {
+      Node<String> source = edge.getSource();
+      Node<String> destination = edge.getDestination();
+      if (visitedEdges.contains(edge) || nodes.get(source) == nodes.get(destination)) {
+        continue;
+      }
+      Edge<String> imageEdge = new Edge<>(edge.getWeight(),
+                                          edge.getDestination(),
+                                          edge.getSource());
+      visitedEdges.add(edge);
+      visitedEdges.add(imageEdge);
+      for (Node<String> node : groups.get(nodes.get(destination))) {
+        nodes.put(node,
+                  nodes.get(source));
+        groups.get(nodes.get(source)).add(node);
+      }
+      groups.remove(destination);
+      if (firstRelation) {
+        this.strongestRelation = groups.get(nodes.get(source));
+        firstRelation = false;
+      }
+      if (groups.size() == k) {
+        this.weakestRelation = groups.get(nodes.get(source));
+        break;
+      }
+    }
+    return groups;
   }
 
   /**
@@ -121,75 +189,5 @@ public class Audie {
     result.delete(result.length() - 1,
                   result.length());
     return result.toString();
-  }
-
-  private Map<Node<String>, List<Node<String>>> getGroupsOfAlgorithm(int k) {
-    Map<Node<String>, List<Node<String>>> groups = groupsByNode();
-    if (groups.size() == k) {
-      return groups;
-    }
-    Map<Node<String>, Node<String>> nodes = getNodes();
-    Set<Edge<String>> visitedEdges = new HashSet<>();
-    boolean firstRelation = true;
-    for (Edge<String> edge : this.graph.getAllEdges()) {
-      Node<String> source = edge.getSource();
-      Node<String> destination = edge.getDestination();
-      if (visitedEdges.contains(edge) || nodes.get(source) == nodes.get(destination)) {
-        continue;
-      }
-      Edge<String> imageEdge = new Edge<>(edge.getWeight(),
-                                          edge.getDestination(),
-                                          edge.getSource());
-      visitedEdges.add(edge);
-      visitedEdges.add(imageEdge);
-      for (Node<String> node : groups.get(nodes.get(destination))) {
-        nodes.put(node,
-                  nodes.get(source));
-        groups.get(nodes.get(source)).add(node);
-      }
-      groups.remove(destination);
-      if (firstRelation) {
-        this.strongestRelation = groups.get(nodes.get(source));
-        firstRelation = false;
-      }
-      if (groups.size() == k) {
-        this.weakestRelation = groups.get(nodes.get(source));
-        break;
-      }
-    }
-    return groups;
-  }
-
-  private Map<Node<String>, List<Node<String>>> groupsByNode() {
-    Map<Node<String>, List<Node<String>>> groups = new HashMap<>();
-    this.graph.getAllNodes().forEach(node -> {
-      List<Node<String>> group = new LinkedList<>();
-      group.add(node);
-      groups.put(node,
-                 group);
-    });
-    return groups;
-  }
-
-  private Map<Node<String>, Node<String>> getNodes() {
-    Map<Node<String>, Node<String>> nodes = new HashMap<>();
-    this.graph.getAllNodes().forEach(node -> nodes.put(node,
-                                                       node));
-    return nodes;
-  }
-
-  private void removeEdgesLessThan(int x) {
-    this.graph.getAllEdges().forEach(edge -> {
-      if (edge.getWeight() <= x) {
-        this.graph.removeEdge(edge.getWeight(),
-                              edge.getSource(),
-                              edge.getDestination());
-      }
-    });
-  }
-
-  private void removeEmptyNodes() {
-    this.graph.getAllNodes().removeIf(node -> this.graph.getEdgesNode(node).isEmpty());
-    this.graph = new MaxGraph<>(this.graph).getGraph();
   }
 }
