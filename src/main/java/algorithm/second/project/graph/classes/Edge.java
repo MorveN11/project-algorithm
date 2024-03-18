@@ -94,24 +94,14 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 
   @Override
   public int compareTo(Edge<T> o) {
-    boolean source = this.source.equals(o.getSource());
-    boolean destination = this.destination.equals(o.getDestination());
-    boolean weight = this.weight.equals(o.getWeight());
-    if (!weight && source && destination) {
-      return 0;
+    int weightComparison = o.getWeight().compareTo(this.weight);
+    if (weightComparison != 0) {
+      return weightComparison;
     }
-    if (!this.weight.equals(o.getWeight())) {
-      return -1 * (this.weight - o.getWeight());
+    int sourceComparison = o.getSource().compareTo(this.source);
+    if (sourceComparison != 0) {
+      return sourceComparison;
     }
-    if (this.source != o.getSource() && this.destination != o.getDestination()) {
-      return -1 * this.source.compareTo(o.getSource());
-    }
-    if (this.source == o.getSource() && this.destination != o.getDestination()) {
-      return -1 * this.destination.compareTo(o.getDestination());
-    }
-    if (this.destination == o.getDestination() && this.source != o.getSource()) {
-      return -1 * this.source.compareTo(o.getDestination());
-    }
-    return 0;
+    return o.getDestination().compareTo(this.destination);
   }
 }

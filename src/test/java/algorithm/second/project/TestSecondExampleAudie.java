@@ -74,7 +74,7 @@ public class TestSecondExampleAudie {
 
   @Test
   void testCase3() {
-    Audie audie = new Audie("docst/example-2.txt");
+    Audie audie = new Audie("docs/example-2.txt");
     int x = 14;
     int k = 3;
     String expectedGuests = """

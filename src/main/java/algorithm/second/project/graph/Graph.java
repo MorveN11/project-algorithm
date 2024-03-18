@@ -2,6 +2,7 @@ package algorithm.second.project.graph;
 
 import algorithm.second.project.graph.classes.Edge;
 import algorithm.second.project.graph.classes.Node;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -13,7 +14,7 @@ import java.util.stream.Stream;
  *
  * @param <T> The Generic Parameter.
  */
-public abstract class Graph<T extends Comparable<T>> {
+public abstract class Graph<T extends Comparable<T>> implements Comparable<Graph<T>> {
 
   private final Map<Node<T>, Set<Edge<T>>> adjSets;
 
@@ -227,7 +228,7 @@ public abstract class Graph<T extends Comparable<T>> {
     }
     return sourceEdges.stream().filter(e -> e.equals(edge)).findFirst().orElse(null);
   }
-
+  
   /**
    * This method add an Edge in the graph.
    *
@@ -281,6 +282,49 @@ public abstract class Graph<T extends Comparable<T>> {
     return false;
   }
 
+  /**
+   * This method gives the sum of the weights of the Graph.
+   *
+   * @return The sum of the weights.
+   */
+  public int getWeightSum() {
+    return this.getAllEdges().stream().reduce(0,
+                                              (acc, e) -> acc + e.getWeight(),
+                                              Integer::sum);
+  }
+
+  private int dfs(Node<T> node, Set<Node<T>> visited, int connections) {
+    visited.add(node);
+    for (Edge<T> neighbor : getEdgesNode(node)) {
+      if (!visited.contains(neighbor.getDestination())) {
+        connections++;
+        dfs(neighbor.getDestination(),
+            visited,
+            connections);
+      }
+    }
+    return connections;
+  }
+
+  /**
+   * This method gives the number of connected nodes in the Graph.
+   *
+   * @return The number of connected nodes.
+   */
+  public int getNumberConnectedNodes() {
+    Set<Node<T>> visited = new HashSet<>();
+    int nodes = 0;
+    for (Node<T> node : getAllNodes()) {
+      int tmpNode = dfs(node,
+                        visited,
+                        0);
+      if (nodes < tmpNode) {
+        nodes = tmpNode;
+      }
+    }
+    return nodes;
+  }
+
   @Override
   public int hashCode() {
     return this.adjSets.hashCode();
@@ -317,5 +361,19 @@ public abstract class Graph<T extends Comparable<T>> {
       }
     }
     return sb.toString();
+  }
+
+  @Override
+  public int compareTo(Graph<T> graph) {
+    int selfSize = this.getNumberConnectedNodes();
+    int graphSize = graph.getNumberConnectedNodes();
+    int selfWeight = this.getWeightSum();
+    int graphWeight = graph.getWeightSum();
+    if (selfSize == graphSize) {
+      return Integer.compare(graphWeight,
+                             selfWeight);
+    }
+    return Integer.compare(graphSize,
+                           selfSize);
   }
 }

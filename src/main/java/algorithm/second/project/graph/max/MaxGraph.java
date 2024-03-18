@@ -6,6 +6,7 @@ import algorithm.second.project.graph.UndirectedGraph;
 import algorithm.second.project.graph.classes.Edge;
 import algorithm.second.project.graph.classes.Node;
 import java.util.HashSet;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 /**
@@ -35,20 +36,14 @@ public class MaxGraph<T extends Comparable<T>> {
   }
 
   private Graph<T> getMaxGraph() {
-    Graph<T> maxGraph = this.graph instanceof DirectedGraph ? new DirectedGraph<>() :
-            new UndirectedGraph<>();
-    int maxWeight = 0;
+    PriorityQueue<Graph<T>> graphs = new PriorityQueue<>();
     for (Node<T> node : graph.getAllNodes()) {
-      Graph<T> tmpGraph = dfs(node,
-                              this.graph instanceof DirectedGraph ? new DirectedGraph<>() :
-                                      new UndirectedGraph<>());
-      int weight = getWeight(tmpGraph);
-      if (weight > maxWeight) {
-        maxWeight = weight;
-        maxGraph = tmpGraph;
-      }
+      Graph<T> graph = dfs(node,
+                           this.graph instanceof DirectedGraph ? new DirectedGraph<>() :
+                                   new UndirectedGraph<>());
+      graphs.add(graph);
     }
-    return maxGraph;
+    return graphs.peek();
   }
 
   private Graph<T> dfs(Node<T> node, Graph<T> dfsGraph) {
@@ -63,13 +58,5 @@ public class MaxGraph<T extends Comparable<T>> {
       }
     }
     return dfsGraph;
-  }
-
-  private int getWeight(Graph<T> graph) {
-    int weight = 0;
-    for (Edge<T> edge : graph.getAllEdges()) {
-      weight += edge.getWeight();
-    }
-    return weight;
   }
 }
