@@ -18,8 +18,6 @@ import java.util.Set;
  */
 public class Audie {
 
-  private Map<Node<String>, List<Node<String>>> groups;
-
   private List<Node<String>> strongestRelation;
 
   private List<Node<String>> weakestRelation;
@@ -33,7 +31,6 @@ public class Audie {
    */
   public Audie(String path) {
     this.graph = new Mst<>(new FileGraphParser(path).parseGraph()).getGraph();
-    this.groups = new HashMap<>();
     this.strongestRelation = new LinkedList<>();
     this.weakestRelation = new LinkedList<>();
   }
@@ -127,28 +124,19 @@ public class Audie {
   }
 
   private Map<Node<String>, List<Node<String>>> getGroupsOfAlgorithm(int k) {
-    if (this.graph.getAllNodes().isEmpty()) {
-      return new HashMap<>();
+    Map<Node<String>, List<Node<String>>> groups = groupsByNode();
+    if (groups.size() == k) {
+      return groups;
     }
-    this.groups = groupsByNode();
     Map<Node<String>, Node<String>> nodes = getNodes();
     Set<Edge<String>> visitedEdges = new HashSet<>();
-    Set<Node<String>> visitedNodes = new HashSet<>();
     boolean firstRelation = true;
     for (Edge<String> edge : this.graph.getAllEdges()) {
-      if (groups.size() == k) {
-        break;
-      }
       Node<String> source = edge.getSource();
       Node<String> destination = edge.getDestination();
-      if (verifyVisitedEdges(visitedEdges,
-                             edge) || verifyVisitedNodes(visitedNodes,
-                                                         source,
-                                                         destination)) {
+      if (visitedEdges.contains(edge) || nodes.get(source) == nodes.get(destination)) {
         continue;
       }
-      visitedNodes.add(source);
-      visitedNodes.add(destination);
       Edge<String> imageEdge = new Edge<>(edge.getWeight(),
                                           edge.getDestination(),
                                           edge.getSource());
@@ -166,25 +154,10 @@ public class Audie {
       }
       if (groups.size() == k) {
         this.weakestRelation = groups.get(nodes.get(source));
+        break;
       }
     }
-    return this.groups;
-  }
-
-  private boolean verifyVisitedNodes(Set<Node<String>> visitedNodes, Node<String> source,
-                                     Node<String> destination) {
-    return visitedNodes.contains(source) && visitedNodes.contains(destination);
-  }
-
-  private boolean verifyVisitedEdges(Set<Edge<String>> visitedEdges, Edge<String> edge) {
-    return visitedEdges.contains(edge);
-  }
-
-  private Map<Node<String>, Node<String>> getNodes() {
-    Map<Node<String>, Node<String>> nodes = new HashMap<>();
-    this.graph.getAllNodes().forEach(node -> nodes.put(node,
-                                                       node));
-    return nodes;
+    return groups;
   }
 
   private Map<Node<String>, List<Node<String>>> groupsByNode() {
@@ -196,6 +169,13 @@ public class Audie {
                  group);
     });
     return groups;
+  }
+
+  private Map<Node<String>, Node<String>> getNodes() {
+    Map<Node<String>, Node<String>> nodes = new HashMap<>();
+    this.graph.getAllNodes().forEach(node -> nodes.put(node,
+                                                       node));
+    return nodes;
   }
 
   private void removeEdgesLessThan(int x) {
