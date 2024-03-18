@@ -11,7 +11,7 @@ public class TestFirstExampleAudie {
 
   @Test
   void testCase1() {
-    Audie audie = new Audie("src/test/resources/example-1.txt");
+    Audie audie = new Audie("docs/example-1.txt");
     int x = 7;
     int k = 2;
     String expectedGuests = """

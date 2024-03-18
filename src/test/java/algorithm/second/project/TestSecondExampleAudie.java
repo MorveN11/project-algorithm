@@ -11,7 +11,7 @@ public class TestSecondExampleAudie {
 
   @Test
   void testCase1() {
-    Audie audie = new Audie("src/test/resources/example-2.txt");
+    Audie audie = new Audie("docs/example-2.txt");
     int x = 10;
     int k = 4;
     String expectedGuests = """
@@ -43,7 +43,7 @@ public class TestSecondExampleAudie {
 
   @Test
   void testCase2() {
-    Audie audie = new Audie("src/test/resources/example-2.txt");
+    Audie audie = new Audie("docs/example-2.txt");
     int x = 10;
     int k = 3;
     String expectedGuests = """
@@ -74,7 +74,7 @@ public class TestSecondExampleAudie {
 
   @Test
   void testCase3() {
-    Audie audie = new Audie("src/test/resources/example-2.txt");
+    Audie audie = new Audie("docst/example-2.txt");
     int x = 14;
     int k = 3;
     String expectedGuests = """

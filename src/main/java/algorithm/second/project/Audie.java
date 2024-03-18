@@ -113,12 +113,13 @@ public class Audie {
                                           edge.getSource());
       visitedEdges.add(edge);
       visitedEdges.add(imageEdge);
-      for (Node<String> node : groups.get(nodes.get(destination))) {
+      Node<String> prevDestination = nodes.get(destination);
+      for (Node<String> node : groups.get(prevDestination)) {
         nodes.put(node,
                   nodes.get(source));
         groups.get(nodes.get(source)).add(node);
       }
-      groups.remove(destination);
+      groups.remove(prevDestination);
       if (firstRelation) {
         this.strongestRelation = groups.get(nodes.get(source));
         firstRelation = false;
