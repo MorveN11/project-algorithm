@@ -7,21 +7,18 @@ import org.junit.jupiter.api.Test;
 /**
  * Test first example of the project.
  */
-public class TestFirstExampleAudie {
+public class TestThirdExampleAudie {
 
   @Test
   void testCase1() {
-    Audie audie = new Audie("docs/example-1.txt",
-                            7,
-                            2);
+    Audie audie = new Audie("docs/example-3.txt",
+                            14,
+                            4);
     String expectedOutput = """
             Guests:
-            Cube Judy Kitt P X
+            A B S
             Groups:
-            P Kitt Judy Cube
-            X
-            Group with strongest friendly relationship: P Kitt Judy Cube
-            Group with least friendly relationship: P Kitt Judy Cube
+            It is not possible
             """;
     assertEquals(expectedOutput,
                  audie.toString());

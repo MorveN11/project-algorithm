@@ -18,6 +18,10 @@ import java.util.Set;
  */
 public class Audie {
 
+  private final Set<Node<String>> guests;
+
+  private final Map<Node<String>, List<Node<String>>> groups;
+
   private List<Node<String>> strongestRelation;
 
   private List<Node<String>> weakestRelation;
@@ -28,15 +32,15 @@ public class Audie {
    * This is the constructor of the class.
    *
    * @param path The path of the file.
+   * @param x    The minimum number of relations.
+   * @param k    The number of groups.
    */
-  public Audie(String path) {
+  public Audie(String path, int x, int k) {
     this.graph = new Mst<>(new FileGraphParser(path).parseGraph()).getGraph();
     this.strongestRelation = new LinkedList<>();
     this.weakestRelation = new LinkedList<>();
-  }
-
-  public Graph<String> getGraph() {
-    return this.graph;
+    this.guests = this.getGreaterThanAlgorithm(x);
+    this.groups = this.getGroupsOfAlgorithm(k);
   }
 
   private void removeEdgesLessThan(int x) {
@@ -54,6 +58,12 @@ public class Audie {
     this.graph = new MaxGraph<>(this.graph).getGraph();
   }
 
+  /**
+   * This method gives the nodes of the graph that has a relation greater than x.
+   *
+   * @param x The number to compare the edges.
+   * @return The nodes of the graph.
+   */
   private Set<Node<String>> getGreaterThanAlgorithm(int x) {
     removeEdgesLessThan(x);
     removeEmptyNodes();
@@ -63,14 +73,12 @@ public class Audie {
   /**
    * This method gives the nodes of the graph that has a relation greater than x.
    *
-   * @param x The number to compare the edges.
    * @return The nodes of the graph.
    */
-  public String getGreaterThan(int x) {
-    Set<Node<String>> nodes = getGreaterThanAlgorithm(x);
+  public String getGreaterThan() {
     StringBuilder result = new StringBuilder();
     result.append("Guests:\n");
-    nodes.forEach(node -> result.append(node).append(" "));
+    this.guests.forEach(node -> result.append(node).append(" "));
     result.delete(result.length() - 1,
                   result.length());
     return result.toString();
@@ -94,6 +102,12 @@ public class Audie {
     return nodes;
   }
 
+  /**
+   * This method gives the groups of the graph.
+   *
+   * @param k The number of groups.
+   * @return The groups of the graph.
+   */
   private Map<Node<String>, List<Node<String>>> getGroupsOfAlgorithm(int k) {
     Map<Node<String>, List<Node<String>>> groups = groupsByNode();
     if (groups.size() == k) {
@@ -129,25 +143,24 @@ public class Audie {
         break;
       }
     }
+    if (groups.size() != k) {
+      return null;
+    }
     return groups;
   }
 
   /**
    * This method gives the groups of the graph.
    *
-   * @param k The number of groups.
    * @return The groups of the graph.
    */
-  public String getGroupsOf(int k) {
+  public String getGroupsOf() {
     StringBuilder result = new StringBuilder();
     result.append("Groups:\n");
-    Map<Node<String>, List<Node<String>>> groups = getGroupsOfAlgorithm(k);
-    if (groups.size() != k) {
-      this.strongestRelation = new LinkedList<>();
-      this.weakestRelation = new LinkedList<>();
+    if (this.groups == null) {
       return result.append("It is not possible").toString();
     }
-    groups.forEach((key, value) -> {
+    this.groups.forEach((key, value) -> {
       value.forEach(node -> result.append(node).append(" "));
       result.delete(result.length() - 1,
                     result.length());
@@ -164,15 +177,8 @@ public class Audie {
    * @return The strongest relation of the graph.
    */
   public String getStrongestRelation() {
-    StringBuilder result = new StringBuilder();
-    result.append("Group with strongest friendly relationship: ");
-    if (this.strongestRelation.isEmpty()) {
-      return result.append("None").toString();
-    }
-    this.strongestRelation.forEach(node -> result.append(node).append(" "));
-    result.delete(result.length() - 1,
-                  result.length());
-    return result.toString();
+    return getRelation(this.strongestRelation,
+                       "Group with strongest friendly relationship: ");
   }
 
   /**
@@ -181,14 +187,39 @@ public class Audie {
    * @return The weakest relation of the graph.
    */
   public String getWeakestRelation() {
+    return getRelation(this.weakestRelation,
+                       "Group with least friendly relationship: ");
+  }
+
+  private String getRelation(List<Node<String>> relation, String message) {
     StringBuilder result = new StringBuilder();
-    result.append("Group with least friendly relationship: ");
-    if (this.weakestRelation.isEmpty()) {
+    result.append(message);
+    if (relation.isEmpty()) {
       return result.append("None").toString();
     }
-    this.weakestRelation.forEach(node -> result.append(node).append(" "));
+    relation.forEach(node -> result.append(node).append(" "));
     result.delete(result.length() - 1,
                   result.length());
     return result.toString();
+  }
+
+  @Override
+  public String toString() {
+    if (this.groups == null) {
+      return """
+              %s
+              %s
+              """.formatted(getGreaterThan(),
+                            getGroupsOf());
+    }
+    return """
+            %s
+            %s
+            %s
+            %s
+            """.formatted(getGreaterThan(),
+                          getGroupsOf(),
+                          getStrongestRelation(),
+                          getWeakestRelation());
   }
 }
