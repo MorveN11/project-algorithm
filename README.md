@@ -1,5 +1,6 @@
 # Audie's Party - Manuel Morales
 
+
 ## Introduction
 
 Audie recently moved to a new town and decided to throw a party to bond with her neighbors.
