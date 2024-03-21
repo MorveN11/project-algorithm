@@ -44,6 +44,17 @@ public class ReadFile {
     return this.relations;
   }
 
+  /**
+   * Reads the neighbors from the file and populates the neighbors and relations
+   * lists.
+   * The algorithm used in this method is a linear scan of the file, splitting
+   * each line into
+   * separate components and adding them to the appropriate lists.
+   *
+   * Time Complexity: O(n), where n is the number of lines in the file.
+   *
+   * @throws ErrorReadingFileException if there is an error reading the file.
+   */
   private void readNeighbors() {
     try {
       String line;
@@ -57,8 +68,8 @@ public class ReadFile {
         String to = split[1];
         int relation = Integer.parseInt(split[2]);
         this.relations.add(new Relation(from,
-                                        to,
-                                        relation));
+            to,
+            relation));
       }
     } catch (Exception e) {
       throw new ErrorReadingFileException();

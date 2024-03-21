@@ -1,13 +1,14 @@
 package algorithm.second.project.graph.max;
 
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Set;
+
 import algorithm.second.project.graph.DirectedGraph;
 import algorithm.second.project.graph.Graph;
 import algorithm.second.project.graph.UndirectedGraph;
 import algorithm.second.project.graph.classes.Edge;
 import algorithm.second.project.graph.classes.Node;
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Set;
 
 /**
  * This is MaxGraph class T -> extends Comparable T.
@@ -39,8 +40,7 @@ public class MaxGraph<T extends Comparable<T>> {
     PriorityQueue<Graph<T>> graphs = new PriorityQueue<>();
     for (Node<T> node : graph.getAllNodes()) {
       Graph<T> graph = dfs(node,
-                           this.graph instanceof DirectedGraph ? new DirectedGraph<>() :
-                                   new UndirectedGraph<>());
+          this.graph instanceof DirectedGraph ? new DirectedGraph<>() : new UndirectedGraph<>());
       graphs.add(graph);
     }
     return graphs.peek();
@@ -48,12 +48,15 @@ public class MaxGraph<T extends Comparable<T>> {
 
   private Graph<T> dfs(Node<T> node, Graph<T> dfsGraph) {
     visited.add(node);
-    for (Edge<T> neighbor : graph.getEdgesNode(node)) {
-      if (!visited.contains(neighbor.getDestination())) {
-        dfsGraph.addEdge(neighbor.getWeight(),
-                         node,
-                         neighbor.getDestination());
-        dfs(neighbor.getDestination(),
+    PriorityQueue<Edge<T>> maxHeap = new PriorityQueue<>();
+    maxHeap.addAll(graph.getEdgesNode(node));
+    while (!maxHeap.isEmpty()) {
+      Edge<T> maxEdge = maxHeap.poll();
+      if (!visited.contains(maxEdge.getDestination())) {
+        dfsGraph.addEdge(maxEdge.getWeight(),
+            node,
+            maxEdge.getDestination());
+        dfs(maxEdge.getDestination(),
             dfsGraph);
       }
     }

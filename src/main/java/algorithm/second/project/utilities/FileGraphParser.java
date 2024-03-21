@@ -18,9 +18,12 @@ public class FileGraphParser {
   }
 
   /**
-   * This method parse the graph from the file.
+   * Parses the graph from the file and returns it.
+   * This method uses an undirected graph implementation to represent the graph.
+   * The time complexity of this method is O(n + m), where n is the number of
+   * nodes and m is the number of edges.
    *
-   * @return The Graph.
+   * @return The parsed graph.
    */
   public Graph<String> parseGraph() {
     Graph<String> graph = new UndirectedGraph<>();
@@ -31,8 +34,8 @@ public class FileGraphParser {
     }
     for (Relation relation : relations) {
       graph.addEdge(relation.relation(),
-                    new Node<>(relation.from()),
-                    new Node<>(relation.to()));
+          new Node<>(relation.from()),
+          new Node<>(relation.to()));
     }
     return graph;
   }

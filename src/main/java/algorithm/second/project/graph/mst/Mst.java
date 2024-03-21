@@ -56,7 +56,7 @@ public class Mst<T extends Comparable<T>> {
     Map<Node<T>, Node<T>> tmpSubsets = new TreeMap<>();
     for (Node<T> node : graph.getAllNodes()) {
       tmpSubsets.put(node,
-                     node);
+          node);
     }
     return tmpSubsets;
   }
@@ -72,13 +72,13 @@ public class Mst<T extends Comparable<T>> {
       Node<T> destination = edge.getDestination();
       Integer weight = edge.getWeight();
       Edge<T> imageEdge = new Edge<>(weight,
-                                     destination,
-                                     source);
+          destination,
+          source);
       visited.add(edge);
       visited.add(imageEdge);
       cleanGraph.addEdge(weight,
-                         source,
-                         destination);
+          source,
+          destination);
     }
     return cleanGraph;
   }
@@ -87,8 +87,8 @@ public class Mst<T extends Comparable<T>> {
     Graph<T> undirectedGraph = new UndirectedGraph<>();
     for (Edge<T> edge : graphToConvert.getAllEdges()) {
       undirectedGraph.addEdge(edge.getWeight(),
-                              edge.getSource(),
-                              edge.getDestination());
+          edge.getSource(),
+          edge.getDestination());
     }
     return undirectedGraph;
   }
@@ -104,21 +104,31 @@ public class Mst<T extends Comparable<T>> {
     Node<T> rootSource = find(source);
     Node<T> rootDestination = find(destination);
     subsets.replace(rootSource,
-                    rootDestination);
+        rootDestination);
   }
 
+  /**
+   * Applies the Kruskal's algorithm to find the minimum spanning tree (MST) of
+   * the given graph.
+   * This algorithm is a greedy algorithm that finds a minimum spanning tree for a
+   * connected weighted graph.
+   * The time complexity of this algorithm is O(E log V), where E is the number of
+   * edges and V is the number of vertices in the graph.
+   *
+   * @param graphToConvert the graph to convert to MST
+   * @return the minimum spanning tree of the given graph
+   */
   private Graph<T> kruskal(Graph<T> graphToConvert) {
-    Graph<T> mst = graphToConvert instanceof DirectedGraph ? new DirectedGraph<>() :
-            new UndirectedGraph<>();
+    Graph<T> mst = graphToConvert instanceof DirectedGraph ? new DirectedGraph<>() : new UndirectedGraph<>();
     Graph<T> cleanGraph = cleanGraph(convertToUndirectGraph(graphToConvert));
     subsets = fillSubset(cleanGraph);
     for (Edge<T> edge : cleanGraph.getAllEdges()) {
       if (find(edge.getSource()) != find(edge.getDestination())) {
         mst.addEdge(edge.getWeight(),
-                    edge.getSource(),
-                    edge.getDestination());
+            edge.getSource(),
+            edge.getDestination());
         union(edge.getSource(),
-              edge.getDestination());
+            edge.getDestination());
         maximumCost += edge.getWeight();
       }
     }
