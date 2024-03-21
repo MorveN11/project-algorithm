@@ -11,6 +11,6 @@ class NodeTest {
     Node<String> node = new Node<>("San Diego");
     node.setElement("San Francisco");
     assertEquals("San Francisco",
-                 node.getElement());
+        node.getElement());
   }
 }

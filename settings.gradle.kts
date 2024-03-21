@@ -1,1 +1,1 @@
-rootProject.name = "algorithm-second-project"
+rootProject.name = "project-algorithm"

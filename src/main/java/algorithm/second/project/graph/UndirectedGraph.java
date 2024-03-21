@@ -5,7 +5,8 @@ import algorithm.second.project.graph.classes.Node;
 import java.util.Set;
 
 /**
- * This is UndirectedGraph class T -> extends Comparable T and UndirectedGraph extends Graph T.
+ * This is UndirectedGraph class T -> extends Comparable T and UndirectedGraph
+ * extends Graph T.
  *
  * @param <T> The Generic Parameter.
  */
@@ -34,8 +35,8 @@ public class UndirectedGraph<T extends Comparable<T>> extends Graph<T> {
         Integer weight = edge.getWeight();
         Node<T> destination = edge.getDestination();
         Edge<T> imageEdge = new Edge<>(weight,
-                                       destination,
-                                       source);
+            destination,
+            source);
         super.getEdgesNode(destination).remove(imageEdge);
         super.getAdjSets().get(destination).remove(imageEdge);
       }
@@ -51,10 +52,11 @@ public class UndirectedGraph<T extends Comparable<T>> extends Graph<T> {
     addNode(source);
     addNode(destination);
     if (addEdgeFromTo(weight,
-                      source,
-                      destination) || addEdgeFromTo(weight,
-                                                    destination,
-                                                    source)) {
+        source,
+        destination)
+        || addEdgeFromTo(weight,
+            destination,
+            source)) {
       return false;
     }
     super.increaseNumEdges();
@@ -64,11 +66,11 @@ public class UndirectedGraph<T extends Comparable<T>> extends Graph<T> {
   @Override
   public boolean removeEdge(Integer weight, Node<T> source, Node<T> destination) {
     Edge<T> e1 = new Edge<>(weight,
-                            source,
-                            destination);
+        source,
+        destination);
     Edge<T> e2 = new Edge<>(weight,
-                            destination,
-                            source);
+        destination,
+        source);
     boolean result1 = false;
     boolean result2 = false;
     for (Node<T> node : super.getAllNodes()) {
@@ -92,11 +94,11 @@ public class UndirectedGraph<T extends Comparable<T>> extends Graph<T> {
   @Override
   public boolean updateEdge(Integer weight, Node<T> source, Node<T> destination, int newWeight) {
     Edge<T> e1 = new Edge<>(weight,
-                            source,
-                            destination);
+        source,
+        destination);
     Edge<T> e2 = new Edge<>(weight,
-                            destination,
-                            source);
+        destination,
+        source);
     boolean result1 = false;
     boolean result2 = false;
     for (Node<T> current : super.getAllNodes()) {

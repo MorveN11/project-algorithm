@@ -1,7 +1,8 @@
 package algorithm.second.project.graph.classes;
 
 /**
- * This is Node class T extends Comparable T and Node implements Comparable Node T.
+ * This is Node class T extends Comparable T and Node implements Comparable Node
+ * T.
  *
  * @param <T> The Generic Parameter.
  */

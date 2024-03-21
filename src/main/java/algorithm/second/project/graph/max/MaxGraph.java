@@ -1,14 +1,13 @@
 package algorithm.second.project.graph.max;
 
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Set;
-
 import algorithm.second.project.graph.DirectedGraph;
 import algorithm.second.project.graph.Graph;
 import algorithm.second.project.graph.UndirectedGraph;
 import algorithm.second.project.graph.classes.Edge;
 import algorithm.second.project.graph.classes.Node;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 /**
  * This is MaxGraph class T -> extends Comparable T.

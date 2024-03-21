@@ -1,18 +1,17 @@
 package algorithm.second.project;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import algorithm.second.project.graph.Graph;
 import algorithm.second.project.graph.classes.Edge;
 import algorithm.second.project.graph.classes.Node;
 import algorithm.second.project.graph.max.MaxGraph;
 import algorithm.second.project.graph.mst.Mst;
 import algorithm.second.project.utilities.FileGraphParser;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * This is the Audie class.
@@ -69,17 +68,10 @@ public class Audie {
   }
 
   /**
-   * This method returns a set of nodes from the graph where all edges have a
-   * weight greater than a given value.
-   * It first removes all edges with a weight less than or equal to the given
-   * value, then removes all nodes without edges.
-   * Finally, it transforms the graph into a maximum graph using a greedy
-   * algorithm and returns all nodes from the maximum graph.
+   * This method gives the nodes of the graph that have a relation greater than x.
    *
-   * @param x The threshold value. The method will return nodes where all edges
-   *          have a weight greater than this value.
-   * @return A set of nodes from the maximum graph where all edges have a weight
-   *         greater than the given value.
+   * @param x The minimum number of relations.
+   * @return The nodes of the graph.
    */
   private Set<Node<String>> getGreaterThanAlgorithm(int x) {
     removeEdgesLessThan(x);

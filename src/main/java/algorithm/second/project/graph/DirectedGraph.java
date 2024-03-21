@@ -5,7 +5,8 @@ import algorithm.second.project.graph.classes.Node;
 import java.util.Set;
 
 /**
- * This is DirectedGraph class T -> extends Comparable T and DirectedGraph extends Graph T.
+ * This is DirectedGraph class T -> extends Comparable T and DirectedGraph
+ * extends Graph T.
  *
  * @param <T> the Generic Parameter.
  */
@@ -46,8 +47,8 @@ public class DirectedGraph<T extends Comparable<T>> extends Graph<T> {
     super.addNode(source);
     super.addNode(destination);
     if (super.addEdgeFromTo(weight,
-                            source,
-                            destination)) {
+        source,
+        destination)) {
       return false;
     }
     super.increaseNumEdges();
@@ -57,8 +58,8 @@ public class DirectedGraph<T extends Comparable<T>> extends Graph<T> {
   @Override
   public boolean removeEdge(Integer weight, Node<T> source, Node<T> destination) {
     Edge<T> e1 = new Edge<>(weight,
-                            source,
-                            destination);
+        source,
+        destination);
     for (Node<T> node : super.getAllNodes()) {
       Set<Edge<T>> edges = super.getEdgesNode(node);
       boolean contains = edges.stream().anyMatch(e -> e.equals(e1));
@@ -74,8 +75,8 @@ public class DirectedGraph<T extends Comparable<T>> extends Graph<T> {
   @Override
   public boolean updateEdge(Integer weight, Node<T> source, Node<T> destination, int newWeight) {
     Edge<T> e1 = new Edge<>(weight,
-                            source,
-                            destination);
+        source,
+        destination);
     for (Node<T> node : getAllNodes()) {
       Set<Edge<T>> edges = super.getEdgesNode(node);
       boolean contains = edges.stream().anyMatch(e -> e.equals(e1));

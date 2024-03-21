@@ -50,7 +50,6 @@ public class ReadFile {
    * The algorithm used in this method is a linear scan of the file, splitting
    * each line into
    * separate components and adding them to the appropriate lists.
-   *
    * Time Complexity: O(n), where n is the number of lines in the file.
    *
    * @throws ErrorReadingFileException if there is an error reading the file.

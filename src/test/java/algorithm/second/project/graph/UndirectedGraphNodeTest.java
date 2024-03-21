@@ -30,29 +30,29 @@ class UndirectedGraphNodeTest {
     final Node<String> e = new Node<>("E");
     final Node<String> f = new Node<>("F");
     assertTrue(graph.addEdge(1,
-                             a,
-                             b));
+        a,
+        b));
     assertTrue(graph.addEdge(1,
-                             a,
-                             f));
+        a,
+        f));
     assertTrue(graph.addEdge(1,
-                             b,
-                             e));
+        b,
+        e));
     assertTrue(graph.addEdge(1,
-                             b,
-                             c));
+        b,
+        c));
     assertTrue(graph.addEdge(1,
-                             c,
-                             e));
+        c,
+        e));
     assertTrue(graph.addEdge(1,
-                             c,
-                             d));
+        c,
+        d));
     assertTrue(graph.addEdge(1,
-                             c,
-                             f));
+        c,
+        f));
     assertTrue(graph.addEdge(1,
-                             f,
-                             e));
+        f,
+        e));
     expectedNumberOfNodes = 6;
     expectedNumberOfEdges = 8;
   }
@@ -60,7 +60,7 @@ class UndirectedGraphNodeTest {
   @Test
   void testNumberOfNodes() {
     assertEquals(expectedNumberOfNodes,
-                 graph.getNumNodes());
+        graph.getNumNodes());
   }
 
   @Test
@@ -72,11 +72,11 @@ class UndirectedGraphNodeTest {
     expectedNumberOfNodes++;
     Node<String> afterAddNode = graph.getNode("O");
     assertEquals("O",
-                 afterAddNode.getElement());
+        afterAddNode.getElement());
     assertEquals(expectedNumberOfNodes,
-                 graph.getNumNodes());
+        graph.getNumNodes());
     assertEquals(expectedNumberOfEdges,
-                 graph.getNumEdges());
+        graph.getNumEdges());
   }
 
   @Test
@@ -84,7 +84,7 @@ class UndirectedGraphNodeTest {
     Node<String> a = new Node<>("A");
     Node<String> beforeRemoveNode = graph.getNode("A");
     assertEquals("A",
-                 beforeRemoveNode.getElement());
+        beforeRemoveNode.getElement());
     assertTrue(graph.removeNode(a));
     expectedNumberOfNodes--;
     expectedNumberOfEdges -= 2;
@@ -95,15 +95,15 @@ class UndirectedGraphNodeTest {
       Node<String> source = edge.getSource();
       Node<String> destination = edge.getDestination();
       assertNotEquals(source,
-                      a);
+          a);
       assertNotEquals(destination,
-                      a);
+          a);
     }
     assertFalse(graph.containsNode(a));
     assertEquals(expectedNumberOfNodes,
-                 graph.getNumNodes());
+        graph.getNumNodes());
     assertEquals(expectedNumberOfEdges,
-                 graph.getNumEdges());
+        graph.getNumEdges());
   }
 
   @Test
@@ -111,17 +111,17 @@ class UndirectedGraphNodeTest {
     Node<String> a = new Node<>("A");
     Node<String> beforeUpdateNode = graph.getNode("A");
     assertEquals("A",
-                 beforeUpdateNode.getElement());
+        beforeUpdateNode.getElement());
     assertTrue(graph.updateNode(a,
-                                "Z"));
+        "Z"));
     Node<String> afterUpdateNode = graph.getNode("A");
     assertNull(afterUpdateNode);
     Node<String> verifyUpdateNode = graph.getNode("Z");
     assertEquals("Z",
-                 verifyUpdateNode.getElement());
+        verifyUpdateNode.getElement());
     assertEquals(expectedNumberOfNodes,
-                 graph.getNumNodes());
+        graph.getNumNodes());
     assertEquals(expectedNumberOfEdges,
-                 graph.getNumEdges());
+        graph.getNumEdges());
   }
 }

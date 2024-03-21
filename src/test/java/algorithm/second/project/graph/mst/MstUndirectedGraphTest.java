@@ -29,61 +29,61 @@ class MstUndirectedGraphTest {
   void setup() {
     graph = new UndirectedGraph<>();
     assertTrue(graph.addEdge(3,
-                             node1,
-                             node2));
+        node1,
+        node2));
     assertTrue(graph.addEdge(5,
-                             node1,
-                             node5));
+        node1,
+        node5));
     assertTrue(graph.addEdge(2,
-                             node5,
-                             node6));
+        node5,
+        node6));
     assertTrue(graph.addEdge(7,
-                             node6,
-                             node4));
+        node6,
+        node4));
     assertTrue(graph.addEdge(9,
-                             node4,
-                             node3));
+        node4,
+        node3));
     assertTrue(graph.addEdge(5,
-                             node2,
-                             node3));
+        node2,
+        node3));
     assertTrue(graph.addEdge(6,
-                             node2,
-                             node5));
+        node2,
+        node5));
     assertTrue(graph.addEdge(3,
-                             node3,
-                             node6));
+        node3,
+        node6));
   }
 
   @Test
   void testKruskalAlgorithm() {
     Graph<Integer> expectedGraph = new UndirectedGraph<>();
     expectedGraph.addEdge(5,
-                          node1,
-                          node5);
+        node1,
+        node5);
     expectedGraph.addEdge(6,
-                          node2,
-                          node5);
+        node2,
+        node5);
     expectedGraph.addEdge(5,
-                          node2,
-                          node3);
+        node2,
+        node3);
     expectedGraph.addEdge(9,
-                          node3,
-                          node4);
+        node3,
+        node4);
     expectedGraph.addEdge(7,
-                          node4,
-                          node6);
+        node4,
+        node6);
     assertEquals(6,
-                 graph.getNumNodes());
+        graph.getNumNodes());
     assertEquals(8,
-                 graph.getNumEdges());
+        graph.getNumEdges());
     Mst<Integer> mst = new Mst<>(graph);
     assertEquals(6,
-                 mst.getGraph().getNumNodes());
+        mst.getGraph().getNumNodes());
     assertEquals(5,
-                 mst.getGraph().getNumEdges());
+        mst.getGraph().getNumEdges());
     assertEquals(32,
-                 mst.getMaximumCost());
+        mst.getMaximumCost());
     assertEquals(expectedGraph,
-                 mst.getGraph());
+        mst.getGraph());
   }
 }

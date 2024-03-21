@@ -23,7 +23,8 @@ public abstract class Graph<T extends Comparable<T>> implements Comparable<Graph
   private Integer numNodes;
 
   /**
-   * This is the constructor of the Graph class. Initialize the map and the num of nodes and edges.
+   * This is the constructor of the Graph class. Initialize the map and the num of
+   * nodes and edges.
    */
   protected Graph() {
     adjSets = new TreeMap<>();
@@ -158,7 +159,7 @@ public abstract class Graph<T extends Comparable<T>> implements Comparable<Graph
     }
     Set<Edge<T>> newAdjacencySet = new TreeSet<>();
     adjSets.put(newNode,
-                newAdjacencySet);
+        newAdjacencySet);
     this.increaseNumNodes();
     return true;
   }
@@ -176,7 +177,7 @@ public abstract class Graph<T extends Comparable<T>> implements Comparable<Graph
     }
     Set<Edge<T>> newAdjacencySet = new TreeSet<>();
     adjSets.put(node,
-                newAdjacencySet);
+        newAdjacencySet);
     this.increaseNumNodes();
     return true;
   }
@@ -219,8 +220,8 @@ public abstract class Graph<T extends Comparable<T>> implements Comparable<Graph
       return null;
     }
     Edge<T> edge = new Edge<>(weight,
-                              source,
-                              destination);
+        source,
+        destination);
     Set<Edge<T>> sourceEdges = this.getEdgesNode(source);
     boolean containsEdge = sourceEdges.stream().anyMatch(e -> e.equals(edge));
     if (!containsEdge) {
@@ -228,7 +229,7 @@ public abstract class Graph<T extends Comparable<T>> implements Comparable<Graph
     }
     return sourceEdges.stream().filter(e -> e.equals(edge)).findFirst().orElse(null);
   }
-  
+
   /**
    * This method add an Edge in the graph.
    *
@@ -259,7 +260,7 @@ public abstract class Graph<T extends Comparable<T>> implements Comparable<Graph
    * @return True if the method can update the Edge and False when not.
    */
   public abstract boolean updateEdge(Integer weight, Node<T> source, Node<T> destination,
-                                     int newWeight);
+      int newWeight);
 
   /**
    * This method add an Edge into the Adjacency Set.
@@ -271,8 +272,8 @@ public abstract class Graph<T extends Comparable<T>> implements Comparable<Graph
    */
   protected boolean addEdgeFromTo(Integer weight, Node<T> source, Node<T> destination) {
     Edge<T> newEdge = new Edge<>(weight,
-                                 source,
-                                 destination);
+        source,
+        destination);
     Set<Edge<T>> sourceEdges = this.getEdgesNode(source);
     boolean containsEdge = sourceEdges.stream().anyMatch(e -> e.equals(newEdge));
     if (containsEdge) {
@@ -289,8 +290,8 @@ public abstract class Graph<T extends Comparable<T>> implements Comparable<Graph
    */
   public int getWeightSum() {
     return this.getAllEdges().stream().reduce(0,
-                                              (acc, e) -> acc + e.getWeight(),
-                                              Integer::sum);
+        (acc, e) -> acc + e.getWeight(),
+        Integer::sum);
   }
 
   private int dfs(Node<T> node, Set<Node<T>> visited, int connections) {
@@ -316,8 +317,8 @@ public abstract class Graph<T extends Comparable<T>> implements Comparable<Graph
     int nodes = 0;
     for (Node<T> node : getAllNodes()) {
       int tmpNode = dfs(node,
-                        visited,
-                        0);
+          visited,
+          0);
       if (nodes < tmpNode) {
         nodes = tmpNode;
       }
@@ -371,9 +372,9 @@ public abstract class Graph<T extends Comparable<T>> implements Comparable<Graph
     int graphWeight = graph.getWeightSum();
     if (selfSize == graphSize) {
       return Integer.compare(graphWeight,
-                             selfWeight);
+          selfWeight);
     }
     return Integer.compare(graphSize,
-                           selfSize);
+        selfSize);
   }
 }

@@ -14,20 +14,20 @@ class EdgeTest {
     final Node<String> sanFrancisco = new Node<>("San Francisco");
     final Node<String> philadelphia = new Node<>("Philadelphia");
     edge = new Edge<>(4,
-                      sanFrancisco,
-                      philadelphia);
+        sanFrancisco,
+        philadelphia);
   }
 
   @Test
   void testGetWeight() {
     assertEquals(4,
-                 edge.getWeight());
+        edge.getWeight());
   }
 
   @Test
   void testSetWeight() {
     edge.setWeight(8);
     assertEquals(8,
-                 edge.getWeight());
+        edge.getWeight());
   }
 }

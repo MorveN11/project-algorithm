@@ -1,7 +1,8 @@
 package algorithm.second.project.graph.classes;
 
 /**
- * This is Edge class T extends -> Comparable T and Edge implements Comparable Edge T.
+ * This is Edge class T extends -> Comparable T and Edge implements Comparable
+ * Edge T.
  *
  * @param <T> The generic parameter.
  */
@@ -88,8 +89,8 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
   @Override
   public String toString() {
     return "%s -> %s | weight: %s".formatted(this.source.toString(),
-                                             this.destination.toString(),
-                                             this.weight);
+        this.destination.toString(),
+        this.weight);
   }
 
   @Override

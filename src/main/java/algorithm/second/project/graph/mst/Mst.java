@@ -119,7 +119,10 @@ public class Mst<T extends Comparable<T>> {
    * @return the minimum spanning tree of the given graph
    */
   private Graph<T> kruskal(Graph<T> graphToConvert) {
-    Graph<T> mst = graphToConvert instanceof DirectedGraph ? new DirectedGraph<>() : new UndirectedGraph<>();
+    Graph<T> mst = new UndirectedGraph<>();
+    if (graphToConvert instanceof DirectedGraph) {
+      mst = new DirectedGraph<>();
+    }
     Graph<T> cleanGraph = cleanGraph(convertToUndirectGraph(graphToConvert));
     subsets = fillSubset(cleanGraph);
     for (Edge<T> edge : cleanGraph.getAllEdges()) {

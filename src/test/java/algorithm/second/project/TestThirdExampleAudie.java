@@ -12,15 +12,15 @@ public class TestThirdExampleAudie {
   @Test
   void testCase1() {
     Audie audie = new Audie("docs/example-3.txt",
-                            14,
-                            4);
+        14,
+        4);
     String expectedOutput = """
-            Guests:
-            A B S
-            Groups:
-            It is not possible
-            """;
+        Guests:
+        A B S
+        Groups:
+        It is not possible
+        """;
     assertEquals(expectedOutput,
-                 audie.toString());
+        audie.toString());
   }
 }

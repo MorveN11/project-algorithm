@@ -31,32 +31,32 @@ class DirectedGraphNodeTest {
     final Node<String> sanFrancisco = new Node<>("San Francisco");
     assertTrue(graph.addNode("San Francisco"));
     assertTrue(graph.addEdge(1,
-                             chicago,
-                             boston));
+        chicago,
+        boston));
     assertTrue(graph.addEdge(1,
-                             boston,
-                             chicago));
+        boston,
+        chicago));
     assertTrue(graph.addEdge(1,
-                             detroit,
-                             chicago));
+        detroit,
+        chicago));
     assertTrue(graph.addEdge(2,
-                             philadelphia,
-                             boston));
+        philadelphia,
+        boston));
     assertTrue(graph.addEdge(1,
-                             philadelphia,
-                             detroit));
+        philadelphia,
+        detroit));
     assertTrue(graph.addEdge(2,
-                             nYork,
-                             philadelphia));
+        nYork,
+        philadelphia));
     assertTrue(graph.addEdge(2,
-                             nYork,
-                             boston));
+        nYork,
+        boston));
     assertTrue(graph.addEdge(1,
-                             nYork,
-                             sanFrancisco));
+        nYork,
+        sanFrancisco));
     assertTrue(graph.addEdge(2,
-                             sanFrancisco,
-                             philadelphia));
+        sanFrancisco,
+        philadelphia));
     expectedNumberOfNodes = 6;
     expectedNumberOfEdges = 9;
   }
@@ -64,7 +64,7 @@ class DirectedGraphNodeTest {
   @Test
   void testNumberOfNodes() {
     assertEquals(expectedNumberOfNodes,
-                 graph.getNumNodes());
+        graph.getNumNodes());
   }
 
   @Test
@@ -76,11 +76,11 @@ class DirectedGraphNodeTest {
     expectedNumberOfNodes++;
     Node<String> afterAddNode = graph.getNode("San Diego");
     assertEquals("San Diego",
-                 afterAddNode.getElement());
+        afterAddNode.getElement());
     assertEquals(expectedNumberOfNodes,
-                 graph.getNumNodes());
+        graph.getNumNodes());
     assertEquals(expectedNumberOfEdges,
-                 graph.getNumEdges());
+        graph.getNumEdges());
   }
 
   @Test
@@ -88,7 +88,7 @@ class DirectedGraphNodeTest {
     Node<String> detroit = new Node<>("Detroit");
     Node<String> beforeRemoveNode = graph.getNode("Detroit");
     assertEquals("Detroit",
-                 beforeRemoveNode.getElement());
+        beforeRemoveNode.getElement());
     assertTrue(graph.removeNode(detroit));
     expectedNumberOfNodes--;
     expectedNumberOfEdges -= 2;
@@ -99,15 +99,15 @@ class DirectedGraphNodeTest {
       Node<String> source = edge.getSource();
       Node<String> destination = edge.getDestination();
       assertNotEquals(source,
-                      detroit);
+          detroit);
       assertNotEquals(destination,
-                      detroit);
+          detroit);
     }
     assertFalse(graph.containsNode(detroit));
     assertEquals(expectedNumberOfNodes,
-                 graph.getNumNodes());
+        graph.getNumNodes());
     assertEquals(expectedNumberOfEdges,
-                 graph.getNumEdges());
+        graph.getNumEdges());
   }
 
   @Test
@@ -115,17 +115,17 @@ class DirectedGraphNodeTest {
     Node<String> detroit = new Node<>("Detroit");
     Node<String> beforeUpdateNode = graph.getNode("Detroit");
     assertEquals("Detroit",
-                 beforeUpdateNode.getElement());
+        beforeUpdateNode.getElement());
     assertTrue(graph.updateNode(detroit,
-                                "San Diego"));
+        "San Diego"));
     Node<String> afterUpdateNode = graph.getNode("Detroit");
     assertNull(afterUpdateNode);
     Node<String> verifyUpdateNode = graph.getNode("San Diego");
     assertEquals("San Diego",
-                 verifyUpdateNode.getElement());
+        verifyUpdateNode.getElement());
     assertEquals(expectedNumberOfNodes,
-                 graph.getNumNodes());
+        graph.getNumNodes());
     assertEquals(expectedNumberOfEdges,
-                 graph.getNumEdges());
+        graph.getNumEdges());
   }
 }

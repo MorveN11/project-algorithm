@@ -27,32 +27,32 @@ class DirectedGraphEdgeTest {
     final Node<String> newYork = new Node<>("New York");
     final Node<String> sanFrancisco = new Node<>("San Francisco");
     assertTrue(graph.addEdge(1,
-                             chicago,
-                             boston));
+        chicago,
+        boston));
     assertTrue(graph.addEdge(1,
-                             boston,
-                             chicago));
+        boston,
+        chicago));
     assertTrue(graph.addEdge(1,
-                             detroit,
-                             chicago));
+        detroit,
+        chicago));
     assertTrue(graph.addEdge(2,
-                             philadelphia,
-                             boston));
+        philadelphia,
+        boston));
     assertTrue(graph.addEdge(1,
-                             philadelphia,
-                             detroit));
+        philadelphia,
+        detroit));
     assertTrue(graph.addEdge(2,
-                             newYork,
-                             philadelphia));
+        newYork,
+        philadelphia));
     assertTrue(graph.addEdge(2,
-                             newYork,
-                             boston));
+        newYork,
+        boston));
     assertTrue(graph.addEdge(1,
-                             newYork,
-                             sanFrancisco));
+        newYork,
+        sanFrancisco));
     assertTrue(graph.addEdge(2,
-                             sanFrancisco,
-                             philadelphia));
+        sanFrancisco,
+        philadelphia));
     expectedNumberOfNodes = 6;
     expectedNumberOfEdges = 9;
   }
@@ -60,7 +60,7 @@ class DirectedGraphEdgeTest {
   @Test
   void testNumberOfEdges() {
     assertEquals(expectedNumberOfEdges,
-                 graph.getNumEdges());
+        graph.getNumEdges());
   }
 
   @Test
@@ -68,23 +68,23 @@ class DirectedGraphEdgeTest {
     Node<String> sanFrancisco = new Node<>("San Francisco");
     Node<String> sanDiego = new Node<>("San Diego");
     Edge<String> beforeAddEdge = graph.getEdge(4,
-                                               sanFrancisco,
-                                               sanDiego);
+        sanFrancisco,
+        sanDiego);
     assertNull(beforeAddEdge);
     assertTrue(graph.addEdge(4,
-                             sanFrancisco,
-                             sanDiego));
+        sanFrancisco,
+        sanDiego));
     expectedNumberOfNodes++;
     expectedNumberOfEdges++;
     Edge<String> afterAddEdge = graph.getEdge(4,
-                                              sanFrancisco,
-                                              sanDiego);
+        sanFrancisco,
+        sanDiego);
     assertEquals("San Francisco -> San Diego | weight: 4",
-                 afterAddEdge.toString());
+        afterAddEdge.toString());
     assertEquals(expectedNumberOfNodes,
-                 graph.getNumNodes());
+        graph.getNumNodes());
     assertEquals(expectedNumberOfEdges,
-                 graph.getNumEdges());
+        graph.getNumEdges());
   }
 
   @Test
@@ -92,22 +92,22 @@ class DirectedGraphEdgeTest {
     Node<String> sanFrancisco = new Node<>("San Francisco");
     Node<String> newYork = new Node<>("New York");
     Edge<String> beforeRemoveEdge = graph.getEdge(1,
-                                                  newYork,
-                                                  sanFrancisco);
+        newYork,
+        sanFrancisco);
     assertEquals("New York -> San Francisco | weight: 1",
-                 beforeRemoveEdge.toString());
+        beforeRemoveEdge.toString());
     assertTrue(graph.removeEdge(1,
-                                newYork,
-                                sanFrancisco));
+        newYork,
+        sanFrancisco));
     expectedNumberOfEdges--;
     Edge<String> afterRemoveEdge = graph.getEdge(1,
-                                                 newYork,
-                                                 sanFrancisco);
+        newYork,
+        sanFrancisco);
     assertNull(afterRemoveEdge);
     assertEquals(expectedNumberOfNodes,
-                 graph.getNumNodes());
+        graph.getNumNodes());
     assertEquals(expectedNumberOfEdges,
-                 graph.getNumEdges());
+        graph.getNumEdges());
   }
 
   @Test
@@ -115,26 +115,26 @@ class DirectedGraphEdgeTest {
     Node<String> sanFrancisco = new Node<>("San Francisco");
     Node<String> newYork = new Node<>("New York");
     Edge<String> beforeUpdateEdge = graph.getEdge(1,
-                                                  newYork,
-                                                  sanFrancisco);
+        newYork,
+        sanFrancisco);
     assertEquals("New York -> San Francisco | weight: 1",
-                 beforeUpdateEdge.toString());
+        beforeUpdateEdge.toString());
     assertTrue(graph.updateEdge(1,
-                                newYork,
-                                sanFrancisco,
-                                5));
+        newYork,
+        sanFrancisco,
+        5));
     Edge<String> afterUpdateEdge = graph.getEdge(1,
-                                                 newYork,
-                                                 sanFrancisco);
+        newYork,
+        sanFrancisco);
     assertNull(afterUpdateEdge);
     Edge<String> verifyUpdateEdge = graph.getEdge(5,
-                                                  newYork,
-                                                  sanFrancisco);
+        newYork,
+        sanFrancisco);
     assertEquals("New York -> San Francisco | weight: 5",
-                 verifyUpdateEdge.toString());
+        verifyUpdateEdge.toString());
     assertEquals(expectedNumberOfNodes,
-                 graph.getNumNodes());
+        graph.getNumNodes());
     assertEquals(expectedNumberOfEdges,
-                 graph.getNumEdges());
+        graph.getNumEdges());
   }
 }
